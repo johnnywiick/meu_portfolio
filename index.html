@@ -1,0 +1,301 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&display=swap');
+
+  .cb{background:#0a0a0f;color:#e0e0e0;font-family:'JetBrains Mono',monospace;position:relative;overflow:hidden;}
+  .scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.22) 2px,rgba(0,0,0,0.22) 4px);pointer-events:none;z-index:100;}
+  .grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,136,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,0.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;}
+  .radial-glow{position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,255,136,0.04) 0%,transparent 70%);pointer-events:none;}
+
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid #2a2a3a;position:relative;z-index:10;}
+  .nav-logo{font-family:'Orbitron',monospace;font-size:16px;font-weight:900;color:#00ff88;letter-spacing:0.25em;text-transform:uppercase;text-shadow:0 0 10px rgba(0,255,136,0.4);}
+  .nav-cta{font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:#00ff88;border:1px solid #00ff88;padding:8px 16px;cursor:pointer;clip-path:polygon(0 5px,5px 0,calc(100% - 5px) 0,100% 5px,100% calc(100% - 5px),calc(100% - 5px) 100%,5px 100%,0 calc(100% - 5px));transition:all 0.15s;}
+  .nav-cta:hover{background:#00ff88;color:#0a0a0f;box-shadow:0 0 12px #00ff88,0 0 24px #00ff8840;}
+
+  .hero{padding:52px 28px 40px;display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:start;position:relative;z-index:10;}
+  .hero-eyebrow{font-size:12px;letter-spacing:0.3em;text-transform:uppercase;color:#00ff88;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .blink{animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  .hero-name{font-family:'Orbitron',monospace;font-size:52px;font-weight:900;text-transform:uppercase;letter-spacing:0.04em;line-height:1.05;color:#e0e0e0;animation:rgbShift 5s ease-in-out infinite;}
+  @keyframes rgbShift{0%,100%{text-shadow:-2px 0 #ff00ff33,2px 0 #00d4ff33;}50%{text-shadow:2px 0 #ff00ff44,-2px 0 #00d4ff44;}}
+  .hero-role{font-family:'Orbitron',monospace;font-size:15px;font-weight:400;text-transform:uppercase;letter-spacing:0.18em;color:#00d4ff;margin-top:10px;text-shadow:0 0 8px rgba(0,212,255,0.3);}
+  .hero-bio{font-size:14px;color:#9ca3af;line-height:1.85;margin-top:18px;max-width:500px;}
+  .hero-actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;}
+
+  .btn-primary{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:#0a0a0f;background:#00ff88;border:none;padding:12px 24px;cursor:pointer;clip-path:polygon(0 7px,7px 0,calc(100% - 7px) 0,100% 7px,100% calc(100% - 7px),calc(100% - 7px) 100%,7px 100%,0 calc(100% - 7px));font-weight:700;transition:all 0.15s;}
+  .btn-primary:hover{box-shadow:0 0 15px #00ff88,0 0 30px #00ff8840;filter:brightness(1.1);}
+  .btn-outline-mag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:#ff00ff;background:transparent;border:1px solid #ff00ff;padding:12px 24px;cursor:pointer;clip-path:polygon(0 7px,7px 0,calc(100% - 7px) 0,100% 7px,100% calc(100% - 7px),calc(100% - 7px) 100%,7px 100%,0 calc(100% - 7px));transition:all 0.15s;}
+  .btn-outline-mag:hover{background:#ff00ff;color:#0a0a0f;box-shadow:0 0 12px #ff00ff,0 0 24px #ff00ff40;}
+
+  .hud{background:#12121a;border:1px solid #2a2a3a;clip-path:polygon(0 12px,12px 0,calc(100% - 12px) 0,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 12px));padding:20px;position:relative;}
+  .hud::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00ff88,transparent);}
+  .hud-header{display:flex;align-items:center;gap:7px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #2a2a3a;}
+  .hud-dot{width:8px;height:8px;border-radius:50%;}
+  .hud-stat{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #1c1c2e;font-size:12px;}
+  .hud-label{color:#6b7280;letter-spacing:0.1em;text-transform:uppercase;}
+  .hud-val{color:#00ff88;font-weight:700;text-shadow:0 0 5px rgba(0,255,136,0.35);}
+  .hud-val.mag{color:#ff00ff;text-shadow:0 0 5px rgba(255,0,255,0.35);}
+  .hud-val.cyan{color:#00d4ff;text-shadow:0 0 5px rgba(0,212,255,0.35);}
+  .hud-val.red{color:#ff3366;text-shadow:0 0 5px rgba(255,51,102,0.35);}
+
+  .skill-bar{margin-top:16px;}
+  .skill-row{display:flex;justify-content:space-between;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;}
+  .skill-name{color:#6b7280;}
+  .skill-pct{color:#00ff88;}
+  .skill-track{height:3px;background:#1c1c2e;margin-bottom:12px;}
+  .skill-fill{height:100%;background:#00ff88;box-shadow:0 0 5px #00ff88;}
+  .skill-fill.mag{background:#ff00ff;box-shadow:0 0 5px #ff00ff;}
+  .skill-fill.cyan{background:#00d4ff;box-shadow:0 0 5px #00d4ff;}
+  .skill-fill.amber{background:#ffaa00;box-shadow:0 0 5px #ffaa00;}
+
+  .section-label{font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#00ff88;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .section-label::before{content:'//';color:#2a2a3a;}
+  .section-title{font-family:'Orbitron',monospace;font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#e0e0e0;margin-bottom:24px;}
+
+  .projects{padding:0 28px 40px;position:relative;z-index:10;}
+  .proj-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:18px;}
+
+  .proj-card{background:#12121a;border:1px solid #2a2a3a;clip-path:polygon(0 10px,10px 0,calc(100% - 10px) 0,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 10px));padding:22px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
+  .proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:transparent;transition:background 0.2s;}
+  .proj-card:hover{transform:translateY(-2px);}
+  .proj-card.green:hover{border-color:#00ff88;box-shadow:0 0 15px rgba(0,255,136,0.12);}
+  .proj-card.green:hover::before{background:linear-gradient(90deg,transparent,#00ff88,transparent);}
+  .proj-card.mag:hover{border-color:#ff00ff;box-shadow:0 0 15px rgba(255,0,255,0.12);}
+  .proj-card.mag:hover::before{background:linear-gradient(90deg,transparent,#ff00ff,transparent);}
+  .proj-card.cyan:hover{border-color:#00d4ff;box-shadow:0 0 15px rgba(0,212,255,0.12);}
+  .proj-card.cyan:hover::before{background:linear-gradient(90deg,transparent,#00d4ff,transparent);}
+  .proj-card.amber:hover{border-color:#ffaa00;box-shadow:0 0 15px rgba(255,170,0,0.12);}
+  .proj-card.amber:hover::before{background:linear-gradient(90deg,transparent,#ffaa00,transparent);}
+  .proj-card.red:hover{border-color:#ff3366;box-shadow:0 0 15px rgba(255,51,102,0.12);}
+  .proj-card.red:hover::before{background:linear-gradient(90deg,transparent,#ff3366,transparent);}
+
+  .proj-num{font-size:11px;color:#2a2a3a;letter-spacing:0.2em;margin-bottom:12px;display:flex;align-items:center;}
+  .proj-title{font-family:'Orbitron',monospace;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#e0e0e0;margin-bottom:8px;}
+  .proj-desc{font-size:13px;color:#6b7280;line-height:1.75;margin-bottom:16px;}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .tag{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;border:1px solid;}
+  .tag.green{color:#00ff88;border-color:#00ff8840;background:#00ff8808;}
+  .tag.mag{color:#ff00ff;border-color:#ff00ff40;background:#ff00ff08;}
+  .tag.cyan{color:#00d4ff;border-color:#00d4ff40;background:#00d4ff08;}
+  .tag.amber{color:#ffaa00;border-color:#ffaa0040;background:#ffaa0008;}
+  .tag.red{color:#ff3366;border-color:#ff336640;background:#ff336608;}
+
+  .terminal-section{padding:0 28px 40px;position:relative;z-index:10;}
+  .terminal-box{background:#0a0a0f;border:1px solid #2a2a3a;clip-path:polygon(0 12px,12px 0,calc(100% - 12px) 0,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 12px));}
+  .terminal-header{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid #2a2a3a;}
+  .t-dot{width:10px;height:10px;border-radius:50%;}
+  .terminal-body{padding:18px 22px;font-size:14px;line-height:2.1;}
+  .t-prompt{color:#00ff88;}
+  .t-cmd{color:#e0e0e0;}
+  .t-out{color:#6b7280;padding-left:16px;display:block;}
+  .t-out.acc{color:#00d4ff;}
+  .t-out.green{color:#00ff88;}
+  .t-out.mag{color:#ff00ff;}
+
+  .saas-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#ff00ff;border:1px solid #ff00ff40;background:#ff00ff08;padding:3px 8px;margin-left:10px;vertical-align:middle;}
+  .saas-badge.amber{color:#ffaa00;border-color:#ffaa0040;background:#ffaa0008;}
+  .saas-badge.red{color:#ff3366;border-color:#ff336640;background:#ff336608;}
+  .saas-badge.cyan{color:#00d4ff;border-color:#00d4ff40;background:#00d4ff08;}
+
+  .contact-strip{display:flex;gap:16px;padding:24px 28px;border-top:1px solid #2a2a3a;position:relative;z-index:10;align-items:center;justify-content:space-between;}
+  .contact-links{display:flex;gap:22px;}
+  .contact-link{font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:#6b7280;cursor:pointer;transition:color 0.15s;display:flex;align-items:center;gap:6px;}
+  .contact-link:hover{color:#00ff88;}
+  .contact-link span{color:#00ff88;}
+
+  .stats-row{display:flex;gap:0;border-top:1px solid #2a2a3a;border-bottom:1px solid #2a2a3a;position:relative;z-index:10;}
+  .stat-item{flex:1;padding:20px 0;text-align:center;border-right:1px solid #2a2a3a;}
+  .stat-item:last-child{border-right:none;}
+  .stat-num{font-family:'Orbitron',monospace;font-size:28px;font-weight:900;line-height:1;}
+  .stat-label{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#6b7280;margin-top:6px;}
+</style>
+
+<div class="cb">
+  <div class="scanlines"></div>
+  <div class="grid-bg"></div>
+  <div class="radial-glow"></div>
+
+  <nav class="nav">
+    <div class="nav-logo">JOHNNY.DEV</div>
+    <div class="nav-cta" onclick="window.open('https://github.com/johnnywiick', '_blank')">github_()</div>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <div class="hero-eyebrow">
+        <span style="color:#2a2a3a">[</span>
+        STATUS: DISPONÍVEL
+        <span style="color:#2a2a3a">]</span>
+        <span class="blink" style="color:#00ff88">█</span>
+      </div>
+      <h1 class="hero-name">JOHNNY<br>MARCOS</h1>
+      <div class="hero-role">// Dev Web · Automação · Cloud</div>
+      <p class="hero-bio">Desenvolvedor focado em soluções web, automação e gestão. Construindo produtos reais — de sistemas de prevenção de perdas a SaaS com IA integrada. Trabalhando com Next.js, Python e Supabase.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="window.open('https://www.instagram.com/dev.johnn/', '_blank')">Iniciar projeto ↗</button>
+        <button class="btn-outline-mag" onclick="window.open('https://github.com/johnnywiick', '_blank')">Ver GitHub</button>
+      </div>
+    </div>
+
+    <div class="hud">
+      <div class="hud-header">
+        <div class="hud-dot" style="background:#ff3366"></div>
+        <div class="hud-dot" style="background:#ffaa00"></div>
+        <div class="hud-dot" style="background:#00ff88"></div>
+        <span style="font-size:11px;color:#6b7280;letter-spacing:0.15em;text-transform:uppercase;margin-left:6px">PROFILE_STATUS.exe</span>
+      </div>
+      <div class="hud-stat"><span class="hud-label">Username</span><span class="hud-val">@johnnywiick</span></div>
+      <div class="hud-stat"><span class="hud-label">Repositórios</span><span class="hud-val mag">08</span></div>
+      <div class="hud-stat"><span class="hud-label">Stack Principal</span><span class="hud-val cyan">Next.js · TS · Python · JS</span></div>
+      <div class="hud-stat"><span class="hud-label">Cloud</span><span class="hud-val">Vercel/Firebase</span></div>
+      <div class="hud-stat"><span class="hud-label">Nível</span><span class="hud-val red">BUILDER 🔥</span></div>
+      <div class="skill-bar">
+        <div class="skill-row"><span class="skill-name">Next.js / React / TS</span><span class="skill-pct">85%</span></div>
+        <div class="skill-track"><div class="skill-fill" style="width:85%"></div></div>
+        <div class="skill-row"><span class="skill-name">Supabase / Cloud</span><span class="skill-pct">80%</span></div>
+        <div class="skill-track"><div class="skill-fill cyan" style="width:80%"></div></div>
+        <div class="skill-row"><span class="skill-name">Python / APIs</span><span class="skill-pct">75%</span></div>
+        <div class="skill-track"><div class="skill-fill mag" style="width:75%"></div></div>
+        <div class="skill-row"><span class="skill-name">IA / Integrações Web</span><span class="skill-pct">70%</span></div>
+        <div class="skill-track"><div class="skill-fill amber" style="width:70%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="stat-num" style="color:#00ff88">7</div>
+      <div class="stat-label">Projetos públicos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:#ff00ff">6</div>
+      <div class="stat-label">Em produção</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:#00d4ff">6</div>
+      <div class="stat-label">Tecnologias Core</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:#ffaa00">2</div>
+      <div class="stat-label">SaaS lançados</div>
+    </div>
+  </div>
+
+  <section class="projects" style="padding-top:32px;">
+    <div class="section-label">PROJETOS REAIS DO GITHUB</div>
+    <div class="section-title">WORK.LOG</div>
+    <div class="proj-grid">
+      
+      <div class="proj-card amber" onclick="window.open('https://github.com/johnnywiick/AgendaFacil2026', '_blank')">
+        <div class="proj-num">PROJECT_01 <span class="saas-badge amber">SaaS</span></div>
+        <div class="proj-title">AGENDA_FÁCIL</div>
+        <p class="proj-desc">SaaS de agendamento com lembretes automáticos via WhatsApp. Dashboard focado em reduzir faltas em salões, cálculo de ROI e métricas em tempo real.</p>
+        <div class="proj-tags">
+          <span class="tag amber">Next.js</span>
+          <span class="tag cyan">TypeScript</span>
+          <span class="tag green">Supabase</span>
+          <span class="tag mag">WhatsApp API</span>
+        </div>
+      </div>
+
+      <div class="proj-card mag" onclick="window.open('https://github.com/johnnywiick/vagacerta-ai', '_blank')">
+        <div class="proj-num">PROJECT_02 <span class="saas-badge">SaaS</span></div>
+        <div class="proj-title">VAGACERTA_AI</div>
+        <p class="proj-desc">Plataforma com IA que analisa currículo e busca vagas em 3 portais. Modelo freemium com pagamento via Mercado Pago e envio de email automático.</p>
+        <div class="proj-tags">
+          <span class="tag mag">Python</span>
+          <span class="tag mag">FastAPI</span>
+          <span class="tag mag">Gemini AI</span>
+          <span class="tag amber">Mercado Pago</span>
+        </div>
+      </div>
+
+      <div class="proj-card red" onclick="window.open('https://github.com/johnnywiick/pizzariapaoevinhobq', '_blank')">
+        <div class="proj-num">PROJECT_03 <span class="saas-badge red">Cliente Real</span></div>
+        <div class="proj-title">PÃO_E_VINHO_WEB</div>
+        <p class="proj-desc">Site institucional em produção com painel administrativo proprietário. Gerenciamento dinâmico de eventos e galeria via Supabase e Cloudinary.</p>
+        <div class="proj-tags">
+          <span class="tag red">JS/HTML/CSS</span>
+          <span class="tag green">Supabase</span>
+          <span class="tag cyan">Cloudinary</span>
+          <span class="tag mag">Vercel</span>
+        </div>
+      </div>
+
+      <div class="proj-card green" onclick="window.open('https://github.com/johnnywiick/radar-loja-482', '_blank')">
+        <div class="proj-num">PROJECT_04</div>
+        <div class="proj-title">RADAR_LOJA_482</div>
+        <p class="proj-desc">Sistema de prevenção de perdas para varejo. Registra ocorrências de RFID violado em tempo real, gera relatórios por período e exporta em PDF.</p>
+        <div class="proj-tags">
+          <span class="tag green">JavaScript</span>
+          <span class="tag green">Firebase</span>
+          <span class="tag green">Firestore</span>
+          <span class="tag cyan">jsPDF</span>
+        </div>
+      </div>
+
+      <div class="proj-card cyan" onclick="window.open('https://github.com/johnnywiick/cantarino-barber', '_blank')">
+        <div class="proj-num">PROJECT_05</div>
+        <div class="proj-title">CANTARINO_BARBER</div>
+        <p class="proj-desc">Landing page premium para barbearia com catálogo de serviços, agendamento via AppBarber e integração com Google Maps. Em produção.</p>
+        <div class="proj-tags">
+          <span class="tag cyan">HTML5</span>
+          <span class="tag cyan">CSS3</span>
+          <span class="tag green">GitHub Pages</span>
+        </div>
+      </div>
+
+      <div class="proj-card amber" onclick="window.open('https://github.com/johnnywiick/gerador-qrcode', '_blank')">
+        <div class="proj-num">PROJECT_06 <span class="saas-badge cyan">Utilitário</span></div>
+        <div class="proj-title">QR_CODE_STUDIO</div>
+        <p class="proj-desc">Gerador de QR Codes profissional em tempo real. Interface leve com personalização de cores e exportação direta para PNG em alta qualidade.</p>
+        <div class="proj-tags">
+          <span class="tag green">JavaScript</span>
+          <span class="tag cyan">HTML5/CSS3</span>
+          <span class="tag mag">QRCode.js</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="terminal-section">
+    <div class="section-label">SOBRE MIM</div>
+    <div class="section-title">ABOUT.SH</div>
+    <div class="terminal-box">
+      <div class="terminal-header">
+        <div class="t-dot" style="background:#ff3366"></div>
+        <div class="t-dot" style="background:#ffaa00"></div>
+        <div class="t-dot" style="background:#00ff88"></div>
+        <span style="font-size:11px;color:#6b7280;margin-left:8px;letter-spacing:0.1em">~/johnnywiick — bash</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="t-prompt">❯ </span><span class="t-cmd">whoami</span></div>
+        <span class="t-out acc">Johnny Marcos | Brasil | Web Dev · Automação · IA</span>
+        <div><span class="t-prompt">❯ </span><span class="t-cmd">cat stack.txt</span></div>
+        <span class="t-out">Frontend: React, Next.js, TypeScript, Tailwind, HTML/CSS</span>
+        <span class="t-out">Backend: Python, FastAPI, Node.js</span>
+        <span class="t-out">Cloud/DB: Supabase, Firebase, PostgreSQL, Cloudinary</span>
+        <span class="t-out">Integrações: WhatsApp Cloud API, Gemini 2.5, n8n</span>
+        <div><span class="t-prompt">❯ </span><span class="t-cmd">ls ./projetos-em-producao</span></div>
+        <span class="t-out green">agendafacil.vercel.app</span>
+        <span class="t-out green">pizzariapaoevinhobq.vercel.app</span>
+        <span class="t-out green">vagacerta-ai.up.railway.app</span>
+        <span class="t-out green">barbeariacantarino.com</span>
+        <span class="t-out green">johnnywiick.github.io/radar-loja-482</span>
+        <span class="t-out green">johnnywiick.github.io/gerador-qrcode</span>
+        <div><span class="t-prompt">❯ </span><span class="t-cmd">cat objetivo.log</span></div>
+        <span class="t-out mag">Construir produtos que resolvem problemas reais. Aberto a freela e oportunidades.</span>
+        <div><span class="t-prompt">❯ <span class="blink">█</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="contact-strip">
+    <div style="font-size:12px;color:#6b7280;letter-spacing:0.15em;text-transform:uppercase;">CONTATO://</div>
+    <div class="contact-links">
+      <span class="contact-link" onclick="window.open('https://github.com/johnnywiick', '_blank')"><span>&gt;</span> GitHub</span>
+      <span class="contact-link" onclick="window.open('https://www.instagram.com/dev.johnn/', '_blank')"><span>&gt;</span> @dev.johnn</span>
+    </div>
+    <div style="font-size:11px;color:#2a2a3a;letter-spacing:0.1em;font-family:'JetBrains Mono',monospace;">© 2026_JOHNNY_MARCOS</div>
+  </div>
+</div>
