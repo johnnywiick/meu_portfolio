@@ -1,4 +1,4 @@
-# 👨‍💻 Portfólio Cyberpunk — Johnny Marcos
+# 👨‍💻 Portfólio — Johnny Marcos
 
 > Portfólio pessoal e catálogo de projetos com estética "High-Tech, Low-Life" e design de terminal.
 
@@ -11,7 +11,7 @@
 
 ## 🚀 O que é o projeto?
 
-Este é o meu portfólio pessoal, desenvolvido em uma arquitetura Single-Page Application (SPA) ultra leve e estática. Ele adota um **Design System Cyberpunk/Glitch**, desenhado para simular a interface de um terminal de dados invadido ou um HUD (Heads-Up Display) de ficção científica militar.
+Este é o meu portfólio pessoal, desenvolvido em uma arquitetura Single-Page Application (SPA) ultra leve e estática. Ele adota um **Design System Cyberpunk**, desenhado para simular a interface de um terminal de dados invadido ou um HUD (Heads-Up Display) de ficção científica militar.
 
 O objetivo principal é centralizar minha trajetória profissional, proficiência técnica e exibir de forma visualmente impactante os sistemas que construí para o mercado (SaaS, prevenção de perdas, sites comerciais e automações).
 
